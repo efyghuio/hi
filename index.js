@@ -1,8 +1,14 @@
-const linearSearch = (arr, target) => {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === target) {
-      return i;
-    }
-  }
-  return -1;
-};
+const senderSignature = aptos.transaction.sign({ signer: alice, transaction });
+
+// Sponsor signs
+const sponsorSignature = aptos.transaction.signAsFeePayer({
+  signer: sponsor,
+  transaction,
+});
+
+// Submit the transaction to chain
+const committedTxn = await aptos.transaction.submit.simple({
+  transaction,
+  senderAuthenticator: senderSignature,
+  feePayerAuthenticator: sponsorSignature,
+});
