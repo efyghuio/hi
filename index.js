@@ -1,14 +1,11 @@
-function maxArea(height) {
-  let maxArea = 0;
-  let left = 0;
-  let right = height.length - 1;
-  while (left < right) {
-    maxArea = Math.max(
-      maxArea,
-      Math.min(height[left], height[right]) * (right - left),
-    );
-    if (height[left] < height[right]) left++;
-    else right--;
+function isValidBST(root) {
+  let prev = null;
+  return inorder(root);
+  function inorder(node) {
+    if (!node) return true;
+    if (!inorder(node.left)) return false;
+    if (prev !== null && node.val <= prev) return false;
+    prev = node.val;
+    return inorder(node.right);
   }
-  return maxArea;
 }
